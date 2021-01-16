@@ -22,24 +22,28 @@ class Recipe(db.Model):
 
     id = db.Column(db.Integer, unique=True, primary_key=True, autoincrement=True)
     title = db.Column(db.String(128), unique=True)
-    steps = db.Column(db.String(128))
+    steps = db.relationship("Steps", backref="recipe")
     category = db.relationship("Category", backref="recipe")
     summary = db.relationship("Summary", backref="recipe")
     nutrition = db.relationship("Nutrition", backref="recipe")
     images = db.relationship("Images", backref="recipe")
     ingredient = db.relationship("Ingredients", backref="recipe")
 
-    def __init__(self, title, summary, steps, nutrition):
+    def __init__(self, title, steps):
         self.title = title
-        self.summary = summary
         self.steps = steps
-        self.nutrition = nutrition
 
     def __str__(self):
         return self.title
 
     def __repr__(self):
         return '<Recipe %r>' % self.title
+    """метод для вывода всего или что то там(крч метод all)чтобы сразу все собрать в json И не ебать себе мозг"""
+
+    def convertation_json(self, title):
+        recipe_obj = Recipe.query.filter_by(title=title)
+
+
 
 
 class Category(db.Model):
@@ -103,6 +107,17 @@ class Ingredients(db.Model):
     def __repr__(self):
         return '<Ingredients %r>' % self.name
 
+
+class Steps(db.Model):
+    __tablename__ = 'steps'
+
+    id = db.Column(db.Integer, primary_key=True, unique=True, autoincrement=True)
+    recipe_id = db.Column(db.Integer, db.ForeignKey('recipes.id'))
+    title = db.Column(db.String(50), nullable=False)
+    text = db.Column(db.Text, nullable=False)
+
+    def __repr__(self):
+        return '<Steps %r>' % self.name
 
 # /////////////////////////////////////////////////////////////////////////////////
 
