@@ -95,3 +95,82 @@ recipe = {
     "KOSHER"
   ],
   "cautions": [],
+
+
+{
+    "id": 1,
+    "title": "lasaghnya",
+    "images_paths": {
+        "slug_1": "http:\\hueta.com/slug1",
+        "slug_2": "http:\\hueta.com/slug2"
+    },
+    "summary": {
+        "prepTime": {
+            "label" : "preparation Time",
+            "time": 12,
+            "measure": "minutes"
+        },
+        "cookTime": {
+            "label" : "cooking Time",
+            "time": 36,
+            "measure": "minutes"
+        },
+        "totalTime": {
+            "label" : "total Time",
+            "time": 48,
+            "measure": "minutes"
+        },
+        "servings": 12
+    },
+    "ingredients": {
+        "apple": {
+            "label" : "apple",
+            "quantity": 3
+        },
+        "bananas": {
+            "label" : "apple",
+            "quantity": 2
+        }
+    },
+    "nutrition" : {
+        "ENERC_KCAL" : {
+            "label" : "Energy",
+            "quantity" : 21814.306200000003,
+            "unit" : "kcal"
+        },
+        "FAT" : {
+            "label" : "Fat",
+            "quantity" : 1562.5579472000002,
+            "unit" : "g"
+        },
+        "SUGAR" : {
+            "label" : "Sugars",
+            "quantity" : 205.60635,
+            "unit" : "g"
+        }
+    },
+    "category": "deserts",
+    "slug": "http:\\hueta.com",
+    "date": "now",
+    "steps": "2"
+}
+
+    title = request.json['title']
+    steps = request.json['steps']
+    summary = request.json['summary']
+    nutrition = request.json['nutrition']
+    images_paths = request.json['images_paths']
+    ingredients = request.json['ingredients']
+    category = request.json['category']
+    slug = request.json['slug']
+    date = request.json['date']
+
+    print("title :", title)
+    print("steps :", steps)
+    print("summary :", summary)
+    print("nutrition :", nutrition)
+    print("images_paths :", images_paths)
+    print("ingredients :", ingredients)
+    print("category :", category)
+    print("slug :", slug)
+    print("date :", date)
