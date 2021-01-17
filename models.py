@@ -114,6 +114,46 @@ class Steps(db.Model):
     def __repr__(self):
         return '<Steps %r>' % self.name
 
+class RecipeSchema(SQLAlchemyAutoSchema):
+    class Meta:
+        model = Recipe
+        include_relationships = True
+        load_instance = True
+
+
+class SummarySchema(SQLAlchemyAutoSchema):
+    class Meta:
+        model = Summary
+        include_fk = True
+        load_instance = True
+
+
+class ImageSchema(SQLAlchemyAutoSchema):
+    class Meta:
+        model = Images
+        include_fk = True
+        load_instance = True
+
+
+class IngredientSchema(SQLAlchemyAutoSchema):
+    class Meta:
+        model = Ingredients
+        include_fk = True
+        load_instance = True
+
+
+class CategorySchema(SQLAlchemyAutoSchema):
+    class Meta:
+        model = Category
+        include_fk = True
+        load_instance = True
+
+
+class NutritionSchema(SQLAlchemyAutoSchema):
+    class Meta:
+        model = Nutrition
+        include_fk = True
+        load_instance = True
 
 
 # class NutritionSchema(ma.Schema):

@@ -96,81 +96,82 @@ recipe = {
   ],
   "cautions": [],
 
-
 {
-    "id": 1,
     "title": "lasaghnya",
-    "images_paths": {
-        "slug_1": "http:\\hueta.com/slug1",
-        "slug_2": "http:\\hueta.com/slug2"
-    },
-    "summary": {
-        "prepTime": {
-            "label" : "preparation Time",
-            "time": 12,
+    "images": [
+        {
+            "name": "1",
+            "slug": "http:\\hueta.com/slug1"
+        },
+        {
+            "name": "2",
+            "slug": "http:\\hueta.com/slug2"
+        }
+    ],
+    "summary": [
+        {
+            "name" : "preparation Time",
+            "quantity": 12,
             "measure": "minutes"
         },
-        "cookTime": {
-            "label" : "cooking Time",
-            "time": 36,
+        {
+            "name" : "cooking Time",
+            "quantity": 36,
             "measure": "minutes"
         },
-        "totalTime": {
-            "label" : "total Time",
-            "time": 48,
+        {
+            "name" : "total Time",
+            "quantity": 48,
             "measure": "minutes"
         },
-        "servings": 12
-    },
-    "ingredients": {
-        "apple": {
-            "label" : "apple",
+        {
+            "name":"servings",
+            "quantity":12,
+            "measure":""
+        }
+    ],
+    "ingredients": [
+        {
+            "name" : "apple",
             "quantity": 3
         },
-        "bananas": {
-            "label" : "apple",
+        {
+            "name" : "banana",
             "quantity": 2
         }
-    },
-    "nutrition" : {
-        "ENERC_KCAL" : {
-            "label" : "Energy",
+    ],
+    "nutrition" : [
+        {
+            "name" : "Energy",
             "quantity" : 21814.306200000003,
-            "unit" : "kcal"
+            "measure" : "kcal"
         },
-        "FAT" : {
-            "label" : "Fat",
+        {
+            "name" : "Fat",
             "quantity" : 1562.5579472000002,
-            "unit" : "g"
+            "measure" : "g"
         },
-        "SUGAR" : {
-            "label" : "Sugars",
+        {
+            "name" : "Sugars",
             "quantity" : 205.60635,
-            "unit" : "g"
+            "measure" : "g"
         }
-    },
-    "category": "deserts",
+    ],
+    "category":[
+        {
+            "name":"deserts"
+        }
+    ],
     "slug": "http:\\hueta.com",
     "date": "now",
-    "steps": "2"
+    "steps": [
+        {
+            "name" : "step 1",
+            "text" : "gafghwt;eoilwjt;ojqet"
+        },
+        {
+            "name" : "step 2",
+            "text" : "aighvIPRWABPRO"
+        }
+    ]
 }
-
-    title = request.json['title']
-    steps = request.json['steps']
-    summary = request.json['summary']
-    nutrition = request.json['nutrition']
-    images_paths = request.json['images_paths']
-    ingredients = request.json['ingredients']
-    category = request.json['category']
-    slug = request.json['slug']
-    date = request.json['date']
-
-    print("title :", title)
-    print("steps :", steps)
-    print("summary :", summary)
-    print("nutrition :", nutrition)
-    print("images_paths :", images_paths)
-    print("ingredients :", ingredients)
-    print("category :", category)
-    print("slug :", slug)
-    print("date :", date)
