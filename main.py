@@ -44,6 +44,24 @@ class Recipe(db.Model):
         db.session.commit()
         return self
 
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    def update(self, data):
+        for key, item in data:
+            setattr(self, key, item)
+        # self.modified_at = datetime.datetime.utcnow()
+        db.session.commit()
+
+    @classmethod
+    def get_all_recipes(cls):
+        return cls.query.all()
+
     @classmethod
     def find_recipe_by_title(cls, title):
         return cls.query.filter_by(title=title).first()
@@ -276,10 +294,10 @@ def add_recipe():
 # Get All Recipes
 @app.route('/recipes', methods=['GET'])
 def get_recipe_list():
-    fetched = Recipe.query.all()
+    fetched = Recipe.get_all_recipes()
     recipe_schema = RecipeSchema(many=True)
     recipes = recipe_schema.dump(fetched)
-    pprint(recipes[0])
+    # pprint(recipes[0])
     return jsonify(recipes)
 
 
@@ -296,20 +314,30 @@ def get_recipe(title):
 # Update a Recipe
 @app.route('/recipes/<string:title>', methods=['PUT'])
 def update_recipe(title):
-    current_recipe = Recipe.find_recipe_by_title(title)
+    data = request.get_json()
     recipe_schema = RecipeSchema()
-    json_recipe = recipe_schema.dump(current_recipe)
-    return jsonify(json_recipe)
-#
-#
-# # Delete Recipe
-# @app.route('/recipes/<id>', methods=['DELETE'])
-# def delete_recipe(id):
-#     recipe = Recipe.query.get(id)
-#     db.session.delete(recipe)
-#     db.session.commit()
-#
-#     return recipe_schema.jsonify(recipe)
+    recipe = recipe_schema.load(data)
+    # print(type(recipe))
+    # print(type(data))
+    # print(data)
+    current_recipe = Recipe.find_recipe_by_title(title)
+
+    for elem in recipe:
+        print(elem)
+    # result = recipe_schema.dump(current_recipe.update(data))
+    # print(data.items())
+    # current_recipe.update(data)
+
+    return f"{title} updated"
+
+
+# Delete Recipe
+@app.route('/recipes/<string:title>', methods=['DELETE'])
+def delete_recipe(title):
+    current_recipe = Recipe.find_recipe_by_title(title)
+    db.session.delete(current_recipe)
+    db.session.commit()
+    return f"{title} deleted"
 
 
 if __name__ == "__main__":
