@@ -56,8 +56,7 @@ class Recipe(db.Model):
     def find_recipe_by_title(cls, title):
         return cls.query.filter_by(title=title).first()
 
-    """метод для вывода всего или что то там(крч метод all)чтобы сразу все собрать в json И не ебать себе мозг"""
-    #  но нужен ли он блять
+
     # @classmethod
     # def convertation_json(cls, title):
     #     recipe_obj = cls.query.filter_by(title=title).first()

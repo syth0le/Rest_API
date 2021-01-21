@@ -1,27 +1,17 @@
 import os
-from flask import Flask, request, jsonify
-from flask_sqlalchemy import SQLAlchemy
-from flask_marshmallow import Marshmallow
-from flask_migrate import Migrate
-from rest_api.models.recipes import RecipeSchema, Recipe
-from rest_api.models.categories import CategorySchema, Category
-from rest_api.models.summary import SummarySchema, Summary
-from rest_api.models.nutrition import NutritionSchema, Nutrition
-from rest_api.models.images import ImagesSchema, Images
-from rest_api.models.ingredients import IngredientsSchema, Ingredients
-from rest_api.models.steps import StepsSchema, Steps
+from flask import Flask
 from flask_marshmallow import Marshmallow
 from flask_migrate import Migrate
 from rest_api.utils.db_init import db
+from flask import request, jsonify
+from rest_api.models.recipes import RecipeSchema, Recipe
 
-
-# from pprint import pprint
 
 app = Flask(__name__)
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///recipes.db'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'test_db.sqlite')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'db.sqlite')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
@@ -34,7 +24,7 @@ migrate = Migrate(app, db)
 
 @app.route('/')
 def index():
-    return 'Я РАБОТАЮ'
+    return 'IT WORKS'
 
 
 def json_getter(json_var):
