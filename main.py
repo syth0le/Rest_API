@@ -85,13 +85,14 @@ def update_recipe(title):
     data = request.get_json()
     recipe_schema = RecipeSchema()
     recipe = recipe_schema.load(data)
+    print(request.title)
     # print(type(recipe))
     # print(type(data))
     # print(data)
     current_recipe = Recipe.find_recipe_by_title(title)
 
-    for elem in recipe:
-        print(elem)
+    # for elem in recipe:
+    #     print(elem)
     # result = recipe_schema.dump(current_recipe.update(data))
     # print(data.items())
     # current_recipe.update(data)
