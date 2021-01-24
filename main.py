@@ -45,8 +45,7 @@ def add_recipe():
         recipe_schema = RecipeSchema()
         recipe = recipe_schema.load(data)
         result = recipe_schema.dump(recipe.create())
-        print(result)
-        return "okay"
+       	return result
     except Exception as e:
         return "error 422"
 
