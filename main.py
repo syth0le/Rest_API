@@ -40,14 +40,19 @@ def json_getter(json_var):
 
 @app.route('/recipes', methods=['POST'])
 def add_recipe():
-    try:
-        data = request.get_json()
-        recipe_schema = RecipeSchema()
-        recipe = recipe_schema.load(data)
-        result = recipe_schema.dump(recipe.create())
-        return result
-    except Exception as e:
-        return "error 422"
+    data = request.get_json()
+    recipe_schema = RecipeSchema()
+    recipe = recipe_schema.load(data)
+    result = recipe_schema.dump(recipe.create())
+    return result
+#    try:
+#        data = request.get_json()
+#        recipe_schema = RecipeSchema()
+#        recipe = recipe_schema.load(data)
+#        result = recipe_schema.dump(recipe.create())
+#        return result
+#    except Exception as e:
+#        return "error 422"
 
 
 # Get All Recipes
