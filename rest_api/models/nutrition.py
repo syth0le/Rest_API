@@ -11,6 +11,7 @@ class Nutrition(db.Model):
     name = db.Column(db.String(50), nullable=False)
     quantity = db.Column(db.Float, nullable=False)
     measure = db.Column(db.String(50), nullable=True)
+    daily_value = db.Column(db.String(50), nullable=True)
 
     def __repr__(self):
         return '<Nutrition %r>' % self.name
@@ -30,4 +31,5 @@ class NutritionSchema(ModelSchema):
     name = fields.String(required=True)
     quantity = fields.Float(required=True)
     measure = fields.String(required=True)
+    daily_value = fields.String(required=False)
     recipe_id = fields.Integer()

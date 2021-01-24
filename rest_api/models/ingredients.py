@@ -8,8 +8,8 @@ class Ingredients(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, unique=True, autoincrement=True)
     recipe_id = db.Column(db.Integer, db.ForeignKey('recipes.id'))
-    name = db.Column(db.String(50), unique=True, nullable=False)
-    quantity = db.Column(db.Integer, unique=True, nullable=True)
+    name = db.Column(db.String(50), nullable=False)
+    quantity = db.Column(db.Integer, nullable=True)
 
     def __repr__(self):
         return '<Ingredients %r>' % self.name
@@ -27,5 +27,5 @@ class IngredientsSchema(ModelSchema):
 
     id = fields.Number(dump_only=True)
     name = fields.String(required=True)
-    quantity = fields.Integer(required=True)
+    quantity = fields.Integer(required=False)
     recipe_id = fields.Integer()

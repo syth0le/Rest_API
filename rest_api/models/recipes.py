@@ -1,3 +1,5 @@
+import datetime
+
 from marshmallow_sqlalchemy import ModelSchema
 from marshmallow import fields
 from rest_api.utils.db_init import db
@@ -15,7 +17,7 @@ class Recipe(db.Model):
     id = db.Column(db.Integer, unique=True, primary_key=True, autoincrement=True)
     title = db.Column(db.String(128), unique=True)
     slug = db.Column(db.String(128), unique=True)
-    date = db.Column(db.String(128))
+    date = db.Column(db.DateTime(timezone=True), default=datetime.datetime.utcnow)
     steps = db.relationship("Steps", backref="recipe", cascade="all, delete-orphan")
     category = db.relationship("Category", backref="recipe", cascade="all, delete-orphan")
     summary = db.relationship("Summary", backref="recipe", cascade="all, delete-orphan")
@@ -70,10 +72,9 @@ class RecipeSchema(ModelSchema):
     id = fields.Number(dump_only=True)
     title = fields.String(required=True)
     slug = fields.String(required=True)
-    date = fields.String(required=True)
     category = fields.Nested(CategorySchema, many=True, only=['name', 'id'])
     summary = fields.Nested(SummarySchema, many=True, only=['name', 'quantity', 'measure', 'id'])
-    nutrition = fields.Nested(NutritionSchema, many=True, only=['name', 'quantity', 'measure', 'id'])
-    images = fields.Nested(ImagesSchema, many=True, only=['name', 'slug', 'id'])
+    nutrition = fields.Nested(NutritionSchema, many=True, only=['name', 'quantity', 'measure', 'daily_value', 'id'])
+    images = fields.Nested(ImagesSchema, many=True, only=['slug', 'id'])
     ingredients = fields.Nested(IngredientsSchema, many=True, only=['name', 'quantity', 'id'])
     steps = fields.Nested(StepsSchema, many=True, only=['name', 'text', 'id'])

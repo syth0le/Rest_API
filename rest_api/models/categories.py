@@ -25,5 +25,5 @@ class CategorySchema(ModelSchema):
         sqla_session = db.session
 
     id = fields.Number(dump_only=True)
-    name = fields.String(required=True)
+    name = fields.String(required=False)
     recipe_id = fields.Integer()

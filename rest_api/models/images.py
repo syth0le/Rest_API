@@ -8,11 +8,10 @@ class Images(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, unique=True, autoincrement=True)
     recipe_id = db.Column(db.Integer, db.ForeignKey('recipes.id'))
-    name = db.Column(db.String(50), unique=True, nullable=False)
-    slug = db.Column(db.String(50), unique=True, nullable=False)
+    slug = db.Column(db.String(50), nullable=False)
 
     def __repr__(self):
-        return '<Images %r>' % self.name
+        return '<Images %r>' % self.slug
 
     def create(self):
         db.session.add(self)
@@ -26,6 +25,5 @@ class ImagesSchema(ModelSchema):
         sqla_session = db.session
 
     id = fields.Number(dump_only=True)
-    name = fields.String(required=True)
     slug = fields.String(required=True)
     recipe_id = fields.Integer()
