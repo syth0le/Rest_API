@@ -129,5 +129,6 @@ dmypy.json
 .pyre/
 
 *.sqlite
+db.sqlite
 vapecloud.db 
 media/
