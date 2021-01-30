@@ -2,6 +2,10 @@ import os
 from flask import Flask
 from flask_marshmallow import Marshmallow
 from flask_migrate import Migrate
+from sqlalchemy import and_, or_
+
+from rest_api.models.categories import Category
+from rest_api.models.ingredients import Ingredients
 from rest_api.utils.db_init import db
 from flask import request, jsonify
 from rest_api.models.recipes import RecipeSchema, Recipe
@@ -65,9 +69,9 @@ def get_recipe_list():
     return jsonify(recipes)
 
 
-# Get Single Recipe
+# Get Single Recipe by title
 @app.route('/recipes/<string:title>', methods=['GET'])
-def get_recipe(title):
+def get_recipe_by_title(title):
     current_recipe = Recipe.find_recipe_by_title(title)
     # current_recipe = Recipe.query.get_or_404(id)
     recipe_schema = RecipeSchema()
@@ -75,7 +79,17 @@ def get_recipe(title):
     return jsonify(json_recipe)
 
 
-# Update a Recipe
+# Get Single Recipe by id
+@app.route('/recipes/<int:id>', methods=['GET'])
+def get_recipe_by_id(id):
+    # current_recipe = Recipe.query.get(id)
+    current_recipe = Recipe.query.get_or_404(id)
+    recipe_schema = RecipeSchema()
+    json_recipe = recipe_schema.dump(current_recipe)
+    return jsonify(json_recipe)
+
+
+# Update a Recipe  написать еще по айдишнику)
 @app.route('/recipes/<string:title>', methods=['PUT'])
 def update_recipe(title):
     data = request.get_json()
@@ -102,3 +116,39 @@ def delete_recipe(title):
     current_recipe = Recipe.find_recipe_by_title(title)
     current_recipe.delete()
     return f"{title} deleted"
+
+
+# Get Recipes by categories
+@app.route('/recipes/category', methods=['GET'])
+def get_recipes_by_category():
+    try:
+        categories = request.args.get('categories').split(',')
+    except:
+        return jsonify({})
+
+    categorized_recipes = Recipe.query.join(Category).filter(Category.name.in_(categories)).all()
+
+    if len(categorized_recipes) == 0:
+        return jsonify({})
+
+    recipe_schema = RecipeSchema(many=True)
+    json_recipe = recipe_schema.dump(categorized_recipes)
+    return jsonify(json_recipe)
+
+
+# Get Recipes by ingredient's filter
+@app.route('/recipes/ingredients', methods=['GET'])
+def get_recipes_by_filters():
+    try:
+        ingredients = request.args.get('ingredients').split(',')
+    except:
+        return jsonify({})
+
+    recipes_by_ingredients = Recipe.query.join(Ingredients).filter(Ingredients.name.in_(ingredients)).all()
+
+    if len(recipes_by_ingredients) == 0:
+        return jsonify({})
+
+    recipe_schema = RecipeSchema(many=True)
+    json_recipe = recipe_schema.dump(recipes_by_ingredients)
+    return jsonify(json_recipe)
