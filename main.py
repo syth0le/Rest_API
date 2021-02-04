@@ -4,8 +4,8 @@ from flask_marshmallow import Marshmallow
 from flask_migrate import Migrate
 from sqlalchemy import and_, or_
 
-from rest_api.models.categories import Category
-from rest_api.models.ingredients import Ingredients
+from rest_api.models.categories import Category, CategorySchema
+from rest_api.models.ingredients import Ingredients , IngredientsSchema
 from rest_api.utils.db_init import db
 from flask import request, jsonify
 from rest_api.models.recipes import RecipeSchema, Recipe
@@ -122,6 +122,16 @@ def delete_recipe(title):
 @app.route('/recipes/category', methods=['GET'])
 def get_recipes_by_category():
     try:
+        extra = request.args.get('extra')
+        if extra == 'all':
+            categories = Category.query.with_entities(Category.name).distinct()
+            categories_schema = CategorySchema(many=True)
+            categories_json = categories_schema.dump(categories)
+            return jsonify(categories_json)
+    except:
+        pass
+
+    try:
         categories = request.args.get('categories').split(',')
     except:
         return jsonify({})
@@ -139,6 +149,16 @@ def get_recipes_by_category():
 # Get Recipes by ingredient's filter
 @app.route('/recipes/ingredients', methods=['GET'])
 def get_recipes_by_filters():
+    try:
+        extra = request.args.get('extra')
+        if extra == 'all':
+            ingredients = Ingredients.query.with_entities(Ingredients.name).distinct()
+            ingredients_schema = IngredientsSchema(many=True)
+            ingredients_json = ingredients_schema.dump(ingredients)
+            return jsonify(ingredients_json)
+    except:
+        pass
+
     try:
         ingredients = request.args.get('ingredients').split(',')
     except:
